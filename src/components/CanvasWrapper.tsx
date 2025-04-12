@@ -1,7 +1,7 @@
 import { galaxyColors } from '../constants/galaxyColors';
+import CameraController from './CameraController';
 import Galaxy from './Galaxy';
 import Stars from './Stars';
-import { CameraControls, OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import { Vector3 } from 'three';
@@ -86,7 +86,7 @@ const CanvasWrapper = () => {
           const size = 0.01 + Math.random() * 0.02; // 0.01–0.03
           const radius = 4 + Math.random() * 6; // 4–10
           const radiusPower = 2 + Math.random() * 2; // 2–4
-          const branches = 3 + Math.floor(Math.random() * 7); // 3–9
+          const branches = 6 + Math.floor(Math.random() * 10); // 6–10
           const spin = Math.random() * 2; // 0–2
           const randomnessPower = 3 + Math.random() * 3; // 3–6
 
@@ -113,8 +113,8 @@ const CanvasWrapper = () => {
           );
         })}
         <ambientLight intensity={2} />
-        {/* <CameraControls makeDefault /> */}
-        <OrbitControls makeDefault />
+        {/* <CameraControl makeDefault /> */}
+        <CameraController />
       </Canvas>
     </div>
   );
