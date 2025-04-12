@@ -1,6 +1,6 @@
 import { useLoader } from '@react-three/fiber';
 import { useMemo } from 'react';
-import { BufferAttribute, TextureLoader } from 'three';
+import { AdditiveBlending, BufferAttribute, TextureLoader } from 'three';
 
 const Stars = () => {
   const starTexture = useLoader(TextureLoader, './textures/star/star.png');
@@ -26,12 +26,13 @@ const Stars = () => {
         <bufferAttribute attach="attributes-position" args={[points.array, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        needsUpdate
-        transparent
         map={starTexture}
         size={1}
         sizeAttenuation={true}
-        depthWrite
+        depthWrite={true}
+        transparent
+        alphaTest={0.5}
+        blending={AdditiveBlending}
       />
     </points>
   );

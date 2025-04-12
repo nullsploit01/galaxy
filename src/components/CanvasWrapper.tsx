@@ -1,5 +1,6 @@
+import Galaxy from './Galaxy';
 import Stars from './Stars';
-import { CameraControls } from '@react-three/drei';
+import { CameraControls, OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 
@@ -58,8 +59,10 @@ const CanvasWrapper = () => {
         dpr={Math.min(window.devicePixelRatio, 2)}
       >
         <Stars />
+        <Galaxy />
         <ambientLight intensity={2} />
-        <CameraControls makeDefault />
+        {/* <CameraControls makeDefault /> */}
+        <OrbitControls makeDefault />
       </Canvas>
     </div>
   );
