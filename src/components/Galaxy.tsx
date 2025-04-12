@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
-import { BufferAttribute, Color, Vector3 } from 'three';
+import { useFrame } from '@react-three/fiber';
+import { useMemo, useRef } from 'react';
+import { BufferAttribute, Color, Group, Vector3 } from 'three';
 
 interface GalaxyProps {
   count?: number;
@@ -12,6 +13,7 @@ interface GalaxyProps {
   insideColor?: string;
   outsideColor?: string;
   position?: Vector3;
+  rotationSpeed?: 0.001;
 }
 
 const Galaxy: React.FC<GalaxyProps> = ({
@@ -25,7 +27,16 @@ const Galaxy: React.FC<GalaxyProps> = ({
   insideColor = '#b88c7f',
   outsideColor = 'gray',
   position = new Vector3(0, 0, 0),
+  rotationSpeed = 0.001,
 }) => {
+  const groupRef = useRef<Group>(null);
+
+  useFrame(() => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += rotationSpeed;
+    }
+  });
+
   const points = useMemo(() => {
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -66,7 +77,7 @@ const Galaxy: React.FC<GalaxyProps> = ({
   }, []);
 
   return (
-    <mesh position={position}>
+    <mesh ref={groupRef} position={position}>
       <points>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[points.array, 3]} />

@@ -70,7 +70,7 @@ const CanvasWrapper = () => {
           count={120000}
           size={0.02}
           rad={5}
-          radiusPower={3}
+          radiusPower={5}
           branches={6}
           spin={1.2}
           randomnessPower={5}
