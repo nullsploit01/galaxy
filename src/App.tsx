@@ -1,5 +1,7 @@
+import CanvasWrapper from "./components/CanvasWrapper";
+
 const App = () => {
-  return <div>App</div>;
+  return <CanvasWrapper />
 };
 
 export default App;
