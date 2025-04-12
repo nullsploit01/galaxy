@@ -1,9 +1,11 @@
+import { useLoader } from '@react-three/fiber';
 import { useMemo } from 'react';
-import { BufferAttribute } from 'three';
+import { BufferAttribute, TextureLoader } from 'three';
 
 const Stars = () => {
-  const count = 100000;
-  const distance = 1000;
+  const starTexture = useLoader(TextureLoader, './textures/star/star.png');
+  const count = 500000;
+  const distance = 500;
   const points = useMemo(() => {
     const positions = new Float32Array(count * 3);
 
@@ -21,16 +23,15 @@ const Stars = () => {
   return (
     <points>
       <bufferGeometry>
-        {/* <bufferAttribute attach="attributes-position" {...points} /> */}
         <bufferAttribute attach="attributes-position" args={[points.array, 3]} />
       </bufferGeometry>
       <pointsMaterial
         needsUpdate
         transparent
-        color="white"
-        size={0.5}
+        map={starTexture}
+        size={1}
         sizeAttenuation={true}
-        depthWrite={true}
+        depthWrite
       />
     </points>
   );

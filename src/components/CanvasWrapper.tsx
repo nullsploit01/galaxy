@@ -1,5 +1,5 @@
 import Stars from './Stars';
-import { OrbitControls } from '@react-three/drei';
+import { CameraControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 
@@ -59,7 +59,7 @@ const CanvasWrapper = () => {
       >
         <Stars />
         <ambientLight intensity={2} />
-        <OrbitControls makeDefault />
+        <CameraControls makeDefault />
       </Canvas>
     </div>
   );
