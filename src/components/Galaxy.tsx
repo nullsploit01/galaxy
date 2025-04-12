@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BufferAttribute } from 'three';
+import { BufferAttribute, Color } from 'three';
 
 const Galaxy = () => {
   const parameters = {
@@ -12,12 +12,11 @@ const Galaxy = () => {
     randomness: 0.8,
     randomnessPower: 5,
     insideColor: '#b88c7f',
-    outsideColor: '#2e3547',
+    outsideColor: 'gray',
   };
 
   const points = useMemo(() => {
     const positions = new Float32Array(parameters.count * 3);
-
     for (let i = 0; i < parameters.count; i++) {
       const radius = Math.pow(Math.random(), parameters.radiusPower) * parameters.radius;
       const branchAngle = ((i % parameters.branches) / parameters.branches) * Math.PI * 2;
@@ -39,14 +38,34 @@ const Galaxy = () => {
     return new BufferAttribute(positions, 3);
   }, []);
 
+  const colors = useMemo(() => {
+    const mixedColors = new Float32Array(parameters.count * 3);
+
+    const colorInside = new Color(parameters.insideColor);
+    const colorOutside = new Color(parameters.outsideColor);
+
+    for (let i = 0; i < parameters.count; i++) {
+      const radius = Math.pow(Math.random(), parameters.radiusPower) * parameters.radius;
+      const mixedColor = colorInside.clone().lerp(colorOutside, radius / parameters.radius);
+
+      const i3 = i * 3;
+      mixedColors[i3 + 0] = mixedColor.r;
+      mixedColors[i3 + 1] = mixedColor.g;
+      mixedColors[i3 + 2] = mixedColor.b;
+    }
+
+    return new BufferAttribute(mixedColors, 3);
+  }, []);
+
   return (
     <points>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[points.array, 3]} />
+        <bufferAttribute attach="attributes-color" args={[colors.array, 3]} />
       </bufferGeometry>
       <pointsMaterial
         depthWrite
-        transparent
+        vertexColors
         sizeAttenuation
         size={parameters.size}
         color={parameters.insideColor}
