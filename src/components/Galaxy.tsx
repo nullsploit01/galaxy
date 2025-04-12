@@ -6,7 +6,8 @@ const Galaxy = () => {
     count: 100000,
     size: 0.015,
     radius: 6.5,
-    branches: 10,
+    radiusPower: 3,
+    branches: 7,
     spin: 1,
     randomness: 0.8,
     randomnessPower: 5,
@@ -18,7 +19,7 @@ const Galaxy = () => {
     const positions = new Float32Array(parameters.count * 3);
 
     for (let i = 0; i < parameters.count; i++) {
-      const radius = Math.random() * parameters.radius;
+      const radius = Math.pow(Math.random(), parameters.radiusPower) * parameters.radius;
       const branchAngle = ((i % parameters.branches) / parameters.branches) * Math.PI * 2;
       const spinAngle = radius * parameters.spin;
 
