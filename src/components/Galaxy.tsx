@@ -1,33 +1,41 @@
 import { useMemo } from 'react';
-import { BufferAttribute, Color } from 'three';
+import { BufferAttribute, Color, Vector3 } from 'three';
 
-const Galaxy = () => {
-  const parameters = {
-    count: 100000,
-    size: 0.015,
-    radius: 6.5,
-    radiusPower: 3,
-    branches: 7,
-    spin: 1,
-    randomness: 0.8,
-    randomnessPower: 5,
-    insideColor: '#b88c7f',
-    outsideColor: 'gray',
-  };
+interface GalaxyProps {
+  count?: number;
+  size?: number;
+  rad?: number;
+  radiusPower?: number;
+  branches?: number;
+  spin?: number;
+  randomnessPower?: number;
+  insideColor?: string;
+  outsideColor?: string;
+  position?: Vector3;
+}
 
+const Galaxy: React.FC<GalaxyProps> = ({
+  count = 100000,
+  size = 0.015,
+  rad = 6.5,
+  radiusPower = 3,
+  branches = 7,
+  spin = 1,
+  randomnessPower = 5,
+  insideColor = '#b88c7f',
+  outsideColor = 'gray',
+  position = new Vector3(0, 0, 0),
+}) => {
   const points = useMemo(() => {
-    const positions = new Float32Array(parameters.count * 3);
-    for (let i = 0; i < parameters.count; i++) {
-      const radius = Math.pow(Math.random(), parameters.radiusPower) * parameters.radius;
-      const branchAngle = ((i % parameters.branches) / parameters.branches) * Math.PI * 2;
-      const spinAngle = radius * parameters.spin;
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      const radius = Math.pow(Math.random(), radiusPower) * rad;
+      const branchAngle = ((i % branches) / branches) * Math.PI * 2;
+      const spinAngle = radius * spin;
 
-      const randomX =
-        Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1);
-      const randomY =
-        Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1);
-      const randomZ =
-        Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1);
+      const randomX = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1);
+      const randomY = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1);
+      const randomZ = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1);
 
       const i3 = i * 3;
       positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
@@ -39,14 +47,14 @@ const Galaxy = () => {
   }, []);
 
   const colors = useMemo(() => {
-    const mixedColors = new Float32Array(parameters.count * 3);
+    const mixedColors = new Float32Array(count * 3);
 
-    const colorInside = new Color(parameters.insideColor);
-    const colorOutside = new Color(parameters.outsideColor);
+    const colorInside = new Color(insideColor);
+    const colorOutside = new Color(outsideColor);
 
-    for (let i = 0; i < parameters.count; i++) {
-      const radius = Math.pow(Math.random(), parameters.radiusPower) * parameters.radius;
-      const mixedColor = colorInside.clone().lerp(colorOutside, radius / parameters.radius);
+    for (let i = 0; i < count; i++) {
+      const radius = Math.pow(Math.random(), radiusPower) * rad;
+      const mixedColor = colorInside.clone().lerp(colorOutside, radius / rad);
 
       const i3 = i * 3;
       mixedColors[i3 + 0] = mixedColor.r;
@@ -58,19 +66,15 @@ const Galaxy = () => {
   }, []);
 
   return (
-    <points>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[points.array, 3]} />
-        <bufferAttribute attach="attributes-color" args={[colors.array, 3]} />
-      </bufferGeometry>
-      <pointsMaterial
-        depthWrite
-        vertexColors
-        sizeAttenuation
-        size={parameters.size}
-        color={parameters.insideColor}
-      />
-    </points>
+    <mesh position={position}>
+      <points>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[points.array, 3]} />
+          <bufferAttribute attach="attributes-color" args={[colors.array, 3]} />
+        </bufferGeometry>
+        <pointsMaterial depthWrite vertexColors sizeAttenuation size={size} color={insideColor} />
+      </points>
+    </mesh>
   );
 };
 
