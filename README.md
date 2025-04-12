@@ -1,54 +1,51 @@
-# React + TypeScript + Vite
+# 🌌 Space
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+What started as an attempt to make a single galaxy… turned into a whole universe.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Description
 
-## Expanding the ESLint configuration
+**Space** is a WebGL universe built with React Three Fiber. It features thousands of procedurally generated galaxies and stars, smooth free-fly camera movement, and a glowing interstellar aesthetic — best experienced in fullscreen.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## ✨ Features
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- 50+ unique, rotating galaxies
+- Dynamic starfields with varied textures
+- Procedural positions, colors, and movement
+- Smooth free-fly camera with full mouse look
+- Scroll and keyboard-based navigation
+- Fully responsive, fullscreen toggle support
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 🎮 Controls
+
+| Action        | Input                   |
+| ------------- | ----------------------- |
+| Move forward  | `W` or `↑`              |
+| Move backward | `S` or `↓`              |
+| Strafe left   | `A` or `←`              |
+| Strafe right  | `D` or `→`              |
+| Move up/down  | `Q` / `E`               |
+| Look around   | `Mouse` (after click)   |
+| Zoom          | `Mouse Scroll`          |
+| Fullscreen    | `Double Click anywhere` |
+
+> 💻 Best experienced on desktop with a mouse.
+
+---
+
+## 🛠 Tech Stack
+
+- React Three Fiber
+- drei
+- Three.js
+- TypeScript
+- GitHub Pages (deployment)
+
+---
+
+Feel free to explore, stare, and float.
