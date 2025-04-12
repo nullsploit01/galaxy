@@ -64,11 +64,15 @@ const CameraController = () => {
   useFrame(() => {
     const direction = new Vector3();
 
-    // keyboard movement
-    if (keys.current['w']) direction.z -= 1;
-    if (keys.current['s']) direction.z += 1;
-    if (keys.current['a']) direction.x -= 1;
-    if (keys.current['d']) direction.x += 1;
+    // Forward / Backward
+    if (keys.current['w'] || keys.current['arrowup']) direction.z -= 1;
+    if (keys.current['s'] || keys.current['arrowdown']) direction.z += 1;
+
+    // Left / Right
+    if (keys.current['a'] || keys.current['arrowleft']) direction.x -= 1;
+    if (keys.current['d'] || keys.current['arrowright']) direction.x += 1;
+
+    // Up / Down
     if (keys.current['q']) direction.y -= 1;
     if (keys.current['e']) direction.y += 1;
 
