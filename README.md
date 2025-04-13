@@ -44,7 +44,7 @@ What started as an attempt to make a single galaxy… turned into a whole univer
 - drei
 - Three.js
 - TypeScript
-- GitHub Pages (deployment)
+- Firebase (deployment)
 
 ---
 
