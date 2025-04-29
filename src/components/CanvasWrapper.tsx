@@ -2,6 +2,7 @@ import { galaxyColors } from '../constants/galaxyColors';
 import CameraController from './CameraController';
 import Galaxy from './Galaxy';
 import Stars from './Stars';
+import { Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import { Vector3 } from 'three';
@@ -115,6 +116,7 @@ const CanvasWrapper = () => {
         <ambientLight intensity={2} />
         {/* <CameraControl makeDefault /> */}
         <CameraController />
+        <Stats />
       </Canvas>
     </div>
   );
