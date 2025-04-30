@@ -1,7 +1,7 @@
 import { galaxyColors } from '../../constants/galaxyColors';
-import Stars from '../Stars';
 import CameraController from './CameraController';
 import Galaxy from './Galaxy';
+import Stars from './Stars';
 import { Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
