@@ -1,9 +1,11 @@
+import starsFragmentShader from '../shaders/stars/fragment.glsl';
+import starsVertexShader from '../shaders/stars/vertex.glsl';
 import { Fragment, useMemo } from 'react';
 import { BufferAttribute } from 'three';
 
 const Stars = () => {
   const countPerLayer = 50000;
-  const distance = 500;
+  const distance = 1000;
 
   const stars = useMemo(() => {
     const positions = new Float32Array(countPerLayer * 3);
@@ -25,9 +27,9 @@ const Stars = () => {
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[stars.bufferAttribute.array, 3]} />
         </bufferGeometry>
-        <pointsMaterial
-          size={0.5}
-          sizeAttenuation={true}
+        <shaderMaterial
+          vertexShader={starsVertexShader}
+          fragmentShader={starsFragmentShader}
           depthWrite={false}
           transparent={true}
           opacity={0.5}
