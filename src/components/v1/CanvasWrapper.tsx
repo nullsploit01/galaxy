@@ -1,46 +1,14 @@
 import { galaxyColors } from '../../constants/galaxyColors';
+import { useFullscreen } from '../../hooks/use-full-screen';
 import CameraController from './CameraController';
 import Galaxy from './Galaxy';
 import Stars from './Stars';
 import { Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { useEffect, useRef } from 'react';
 import { Vector3 } from 'three';
 
 const CanvasWrapper = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleDblClick = () => {
-      const container = containerRef.current;
-      if (!container) return;
-
-      const fullscreenElement =
-        document.fullscreenElement || (document as any).webkitFullscreenElement;
-
-      if (!fullscreenElement) {
-        container.requestFullscreen?.() || (container as any).webkitRequestFullscreen?.();
-      } else {
-        document.exitFullscreen?.() || (document as any).webkitExitFullscreen?.();
-      }
-    };
-
-    const resizeCanvas = () => {
-      setTimeout(() => {
-        window.dispatchEvent(new Event('resize'));
-      }, 100);
-    };
-
-    window.addEventListener('dblclick', handleDblClick);
-    document.addEventListener('fullscreenchange', resizeCanvas);
-    document.addEventListener('webkitfullscreenchange', resizeCanvas);
-
-    return () => {
-      window.removeEventListener('dblclick', handleDblClick);
-      document.removeEventListener('fullscreenchange', resizeCanvas);
-      document.removeEventListener('webkitfullscreenchange', resizeCanvas);
-    };
-  }, []);
+  const containerRef = useFullscreen<HTMLDivElement>();
 
   const totalGalaxies = 50;
   const distance = 500;
