@@ -1,6 +1,8 @@
-import App from '../pages/app';
-import AppV1 from '../pages/v1';
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
+
+const App = lazy(() => import('../pages/app'));
+const AppV1 = lazy(() => import('../pages/v1'));
 
 export const router = createBrowserRouter([
   {
