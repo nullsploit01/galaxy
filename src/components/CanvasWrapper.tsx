@@ -1,6 +1,6 @@
 import { useFullscreen } from '../hooks/use-full-screen';
 import Stars from './Stars';
-import { OrbitControls } from '@react-three/drei';
+import { OrbitControls, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 
 const CanvasWrapper = () => {
@@ -11,6 +11,7 @@ const CanvasWrapper = () => {
       <Canvas>
         <Stars />
         <OrbitControls makeDefault />
+        <Stats />
       </Canvas>
     </div>
   );
