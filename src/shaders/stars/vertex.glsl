@@ -3,6 +3,7 @@ uniform float uTime;
 
 attribute float aScale;
 attribute float aPhase;
+attribute float aTwinkleFactor;
 
 varying float vTwinkle;
 
@@ -15,7 +16,13 @@ void main()
 
     gl_Position = projectedPosition;
     gl_PointSize = uSize * aScale;
-    gl_PointSize *= (1.0 / - viewPosition.z); // for depth write effect
+    gl_PointSize *= (1.0 / - viewPosition.z); 
 
-    vTwinkle = 0.5 + (0.5 * sin(uTime * 2.0 + aPhase));
+    float slowWave = sin(uTime * 0.5 + aPhase);
+    float fastWave = sin(uTime * 2.0 + aPhase * 1.5);
+
+    float twinkleRaw = (slowWave + fastWave) * 0.5; 
+    twinkleRaw = (twinkleRaw + 1.0) * 0.5;
+
+    vTwinkle = 0.5 + twinkleRaw * aTwinkleFactor;
 }
