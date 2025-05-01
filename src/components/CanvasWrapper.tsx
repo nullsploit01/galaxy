@@ -9,6 +9,8 @@ const CanvasWrapper = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const mode = urlParams.get('mode') || 'galaxy';
   const containerRef = useFullscreen<HTMLDivElement>();
+  const hash = window.location.hash;
+  const isDebug = hash.includes('debug');
 
   const handleSelectMode = (mode: string) => {
     const newUrl = new URL(window.location.href);
@@ -29,7 +31,8 @@ const CanvasWrapper = () => {
       >
         <Stars />
         <Galaxy isPortal={mode === 'portal'} isCollapsing={mode === 'galaxy collapsing'} />
-        <Stats />
+        {isDebug && <Stats />}
+
         <OrbitControls enableDamping />
       </Canvas>
       <Controls onSelect={handleSelectMode} />
