@@ -13,11 +13,20 @@ const CanvasWrapper = () => {
 
   return (
     <div ref={containerRef} style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
-      <Canvas>
+      <Canvas
+        camera={{
+          fov: 75,
+          aspect: window.innerWidth / window.innerHeight,
+          near: 0.1,
+          far: 100,
+          position: [3, 3, 3],
+        }}
+        dpr={Math.min(window.devicePixelRatio, 2)}
+      >
         <Stars />
         <Galaxy />
         <Stats />
-        <OrbitControls />
+        <OrbitControls enableDamping />
       </Canvas>
       <Controls onSelect={handleSelectMode} />
     </div>

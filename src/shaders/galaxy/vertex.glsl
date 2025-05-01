@@ -16,8 +16,8 @@ void main()
 
     angle += angleOffset;
 
-    modelPosition.x = cos(angle * 500.0) ;
-    modelPosition.z = sin(angle * 500.0) ;
+    modelPosition.x = cos(angle ) * distanceToCenter ;
+    modelPosition.z = sin(angle ) * distanceToCenter;
 
     modelPosition.x += aRandomness.x * 0.01;
     modelPosition.y += aRandomness.y * 0.01;
