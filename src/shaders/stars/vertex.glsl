@@ -16,7 +16,7 @@ void main()
 
     gl_Position = projectedPosition;
     gl_PointSize = uSize * aScale;
-    gl_PointSize *= (1.0 / - viewPosition.z); 
+    gl_PointSize = (1.0 / - viewPosition.z); 
 
     float slowWave = sin(uTime * 0.5 + aPhase);
     float fastWave = sin(uTime * 2.0 + aPhase * 1.5);
