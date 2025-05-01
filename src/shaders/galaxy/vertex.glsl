@@ -1,6 +1,6 @@
 uniform float uSize;
 uniform float uTime;
-uniform bool uIsPortal;
+uniform float uIsPortal;
 
 attribute float aScale;
 attribute vec3 aRandomness;
@@ -17,7 +17,7 @@ void main()
 
     angle += angleOffset;
 
-    if(uIsPortal)
+    if(uIsPortal > 0.5)
     {
         modelPosition.x = cos(angle );
         modelPosition.z = sin(angle );

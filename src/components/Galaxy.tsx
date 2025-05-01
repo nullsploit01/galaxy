@@ -41,15 +41,8 @@ const Galaxy: React.FC<GalaxyProps> = ({
   useFrame(({ clock }) => {
     if (materialRef.current) {
       materialRef.current.uniforms.uTime.value = clock.elapsedTime;
-
-      if (isPortal) {
-        materialRef.current.uniforms.uIsPortal.value = 1;
-      } else if (isCollapsing) {
-        materialRef.current.uniforms.uIsCollapsing.value = 1;
-      } else {
-        materialRef.current.uniforms.uIsCollapsing.value = 0;
-        materialRef.current.uniforms.uIsPortal.value = 0;
-      }
+      materialRef.current.uniforms.uIsCollapsing.value = isCollapsing ? 1.0 : 0.0;
+      materialRef.current.uniforms.uIsPortal.value = isPortal ? 1.0 : 0.0;
     }
   });
 
@@ -59,6 +52,11 @@ const Galaxy: React.FC<GalaxyProps> = ({
         meshRef.current.position.set(0, -0.9, 0);
         camera.position.set(0, 4, 0);
       }
+    }
+
+    if (materialRef.current) {
+      materialRef.current.uniforms.uIsCollapsing.value = isCollapsing ? 1.0 : 0.0;
+      materialRef.current.uniforms.uIsPortal.value = isPortal ? 1.0 : 0.0;
     }
   }, [isCollapsing, isPortal]);
 
@@ -118,34 +116,29 @@ const Galaxy: React.FC<GalaxyProps> = ({
   }, []);
 
   return (
-    <mesh ref={meshRef} position={position}>
-      <points>
-        <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[points.position.array, 3]} />
-          <bufferAttribute attach="attributes-color" args={[points.color.array, 3]} />
-          <bufferAttribute attach="attributes-aScale" args={[points.scale.array, 1]} />
-          <bufferAttribute
-            attach="attributes-aRandomness"
-            args={[points.randomnessArray.array, 3]}
-          />
-        </bufferGeometry>
-        <shaderMaterial
-          ref={materialRef}
-          needsUpdate
-          depthWrite={false}
-          vertexColors={true}
-          vertexShader={galaxyVertexShader}
-          blending={AdditiveBlending}
-          fragmentShader={galaxyFragmentShader}
-          uniforms={{
-            uTime: { value: 0 },
-            uSize: { value: 10 * Math.min(window.devicePixelRatio, 2) },
-            uIsPortal: { value: isPortal },
-            uIsCollapsing: { value: isCollapsing },
-          }}
-        />
-      </points>
-    </mesh>
+    <points ref={meshRef} position={position}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[points.position.array, 3]} />
+        <bufferAttribute attach="attributes-color" args={[points.color.array, 3]} />
+        <bufferAttribute attach="attributes-aScale" args={[points.scale.array, 1]} />
+        <bufferAttribute attach="attributes-aRandomness" args={[points.randomnessArray.array, 3]} />
+      </bufferGeometry>
+      <shaderMaterial
+        ref={materialRef}
+        needsUpdate
+        depthWrite={false}
+        vertexColors={true}
+        vertexShader={galaxyVertexShader}
+        blending={AdditiveBlending}
+        fragmentShader={galaxyFragmentShader}
+        uniforms={{
+          uTime: { value: 0 },
+          uSize: { value: 10 * Math.min(window.devicePixelRatio, 2) },
+          uIsPortal: { value: isPortal ? 1.0 : 0.0 },
+          uIsCollapsing: { value: isCollapsing ? 1.0 : 0.0 },
+        }}
+      />
+    </points>
   );
 };
 

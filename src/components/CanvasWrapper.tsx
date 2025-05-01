@@ -4,14 +4,16 @@ import Galaxy from './Galaxy';
 import Stars from './Stars';
 import { OrbitControls, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { useState } from 'react';
 
 const CanvasWrapper = () => {
-  const [mode, setMode] = useState<'galaxy' | 'portal' | 'galaxy collapsing'>('galaxy');
-
+  const urlParams = new URLSearchParams(window.location.search);
+  const mode = urlParams.get('mode') || 'galaxy';
   const containerRef = useFullscreen<HTMLDivElement>();
-  const handleSelectMode = (mode: 'galaxy' | 'portal' | 'galaxy collapsing') => {
-    setMode(mode);
+
+  const handleSelectMode = (mode: string) => {
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.set('mode', mode);
+    window.location.href = newUrl.toString();
   };
 
   return (

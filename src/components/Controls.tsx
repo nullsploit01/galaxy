@@ -1,12 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-const Controls = ({
-  onSelect,
-}: {
-  onSelect: (mode: 'galaxy' | 'portal' | 'galaxy collapsing') => void;
-}) => {
+const Controls = ({ onSelect }: { onSelect: (mode: string) => void }) => {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<'galaxy' | 'portal' | 'galaxy collapsing'>('portal');
+  const initialMode = new URLSearchParams(window.location.search).get('mode') || 'galaxy';
+  const [selected, setSelected] = useState(initialMode);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -20,10 +17,6 @@ const Controls = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-  useEffect(() => {
-    onSelect(selected);
-  }, [onSelect, selected]);
 
   const modes = ['Galaxy', 'Portal', 'Galaxy Collapsing'];
 
@@ -42,8 +35,8 @@ const Controls = ({
                 key={mode}
                 className={`controls-item ${selected === modeKey ? 'selected' : ''}`}
                 onClick={() => {
-                  setSelected(modeKey as 'galaxy' | 'portal' | 'galaxy collapsing');
-                  onSelect(modeKey as 'galaxy' | 'portal' | 'galaxy collapsing');
+                  setSelected(modeKey);
+                  onSelect(modeKey);
                   setOpen(false);
                 }}
               >
