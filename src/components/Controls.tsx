@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
-const Controls = ({ onSelect }: { onSelect: (mode: string) => void }) => {
+const Controls = ({
+  onSelect,
+}: {
+  onSelect: (mode: 'galaxy' | 'portal' | 'galaxy collapsing') => void;
+}) => {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<'galaxy' | 'portal' | 'galaxy collapsing'>('galaxy');
+  const [selected, setSelected] = useState<'galaxy' | 'portal' | 'galaxy collapsing'>('portal');
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,7 +43,7 @@ const Controls = ({ onSelect }: { onSelect: (mode: string) => void }) => {
                 className={`controls-item ${selected === modeKey ? 'selected' : ''}`}
                 onClick={() => {
                   setSelected(modeKey as 'galaxy' | 'portal' | 'galaxy collapsing');
-                  onSelect(modeKey);
+                  onSelect(modeKey as 'galaxy' | 'portal' | 'galaxy collapsing');
                   setOpen(false);
                 }}
               >

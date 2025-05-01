@@ -4,11 +4,14 @@ import Galaxy from './Galaxy';
 import Stars from './Stars';
 import { OrbitControls, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
+import { useState } from 'react';
 
 const CanvasWrapper = () => {
+  const [mode, setMode] = useState<'galaxy' | 'portal' | 'galaxy collapsing'>('galaxy');
+
   const containerRef = useFullscreen<HTMLDivElement>();
-  const handleSelectMode = (mode: string) => {
-    console.log('Selected mode:', mode);
+  const handleSelectMode = (mode: 'galaxy' | 'portal' | 'galaxy collapsing') => {
+    setMode(mode);
   };
 
   return (
@@ -18,13 +21,12 @@ const CanvasWrapper = () => {
           fov: 75,
           aspect: window.innerWidth / window.innerHeight,
           near: 0.1,
-          far: 100,
           position: [3, 3, 3],
         }}
         dpr={Math.min(window.devicePixelRatio, 2)}
       >
         <Stars />
-        <Galaxy />
+        <Galaxy isPortal={mode === 'portal'} isCollapsing={mode === 'galaxy collapsing'} />
         <Stats />
         <OrbitControls enableDamping />
       </Canvas>

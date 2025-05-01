@@ -1,8 +1,8 @@
 import galaxyFragmentShader from '../shaders/galaxy/fragment.glsl';
 import galaxyVertexShader from '../shaders/galaxy/vertex.glsl';
-import { useFrame } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
-import { AdditiveBlending, BufferAttribute, Color, ShaderMaterial, Vector3 } from 'three';
+import { useFrame, useThree } from '@react-three/fiber';
+import { useEffect, useMemo, useRef } from 'react';
+import { AdditiveBlending, BufferAttribute, Color, Mesh, ShaderMaterial, Vector3 } from 'three';
 
 interface GalaxyProps {
   count?: number;
@@ -16,6 +16,8 @@ interface GalaxyProps {
   outsideColor?: string;
   position?: Vector3;
   rotationSpeed?: 0.001;
+  isPortal?: boolean;
+  isCollapsing?: boolean;
 }
 
 const Galaxy: React.FC<GalaxyProps> = ({
@@ -29,14 +31,36 @@ const Galaxy: React.FC<GalaxyProps> = ({
   insideColor = '#ff0030',
   outsideColor = '#1b3984',
   position = new Vector3(0, 0, 0),
+  isPortal = false,
+  isCollapsing = false,
 }) => {
   const materialRef = useRef<ShaderMaterial>(null);
+  const meshRef = useRef<Mesh>(null);
+  const { camera } = useThree();
 
   useFrame(({ clock }) => {
     if (materialRef.current) {
       materialRef.current.uniforms.uTime.value = clock.elapsedTime;
+
+      if (isPortal) {
+        materialRef.current.uniforms.uIsPortal.value = 1;
+      } else if (isCollapsing) {
+        materialRef.current.uniforms.uIsCollapsing.value = 1;
+      } else {
+        materialRef.current.uniforms.uIsCollapsing.value = 0;
+        materialRef.current.uniforms.uIsPortal.value = 0;
+      }
     }
   });
+
+  useEffect(() => {
+    if (meshRef.current) {
+      if (isPortal) {
+        meshRef.current.position.set(0, -0.9, 0);
+        camera.position.set(0, 4, 0);
+      }
+    }
+  }, [isCollapsing, isPortal]);
 
   const points = useMemo(() => {
     const positions = new Float32Array(count * 3);
@@ -94,7 +118,7 @@ const Galaxy: React.FC<GalaxyProps> = ({
   }, []);
 
   return (
-    <mesh position={position}>
+    <mesh ref={meshRef} position={position}>
       <points>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[points.position.array, 3]} />
@@ -116,6 +140,8 @@ const Galaxy: React.FC<GalaxyProps> = ({
           uniforms={{
             uTime: { value: 0 },
             uSize: { value: 10 * Math.min(window.devicePixelRatio, 2) },
+            uIsPortal: { value: isPortal },
+            uIsCollapsing: { value: isCollapsing },
           }}
         />
       </points>

@@ -1,5 +1,6 @@
 uniform float uSize;
 uniform float uTime;
+uniform bool uIsPortal;
 
 attribute float aScale;
 attribute vec3 aRandomness;
@@ -16,12 +17,26 @@ void main()
 
     angle += angleOffset;
 
-    modelPosition.x = cos(angle ) * distanceToCenter ;
-    modelPosition.z = sin(angle ) * distanceToCenter;
+    if(uIsPortal)
+    {
+        modelPosition.x = cos(angle );
+        modelPosition.z = sin(angle );
 
-    modelPosition.x += aRandomness.x * 0.01;
-    modelPosition.y += aRandomness.y * 0.01;
-    modelPosition.z += aRandomness.z * 0.01;
+        modelPosition.x += aRandomness.x * 0.01;
+        modelPosition.y += aRandomness.y * 0.01;
+        modelPosition.z += aRandomness.z * 0.01;
+    }
+    else
+    {
+        modelPosition.x = cos(angle ) * distanceToCenter ;
+        modelPosition.z = sin(angle ) * distanceToCenter;
+
+        modelPosition.x += aRandomness.x;
+        modelPosition.y += aRandomness.y;
+        modelPosition.z += aRandomness.z;
+    }
+
+    
 
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 projectedPosition = projectionMatrix * viewPosition;

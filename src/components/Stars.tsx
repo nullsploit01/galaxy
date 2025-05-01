@@ -39,7 +39,7 @@ const Stars = () => {
   };
 
   const [nearStars, midStars, farStars] = useMemo(() => {
-    return [createStars(1500, 1500), createStars(35000, 2500), createStars(55000, 4500)];
+    return [createStars(1500, 1500), createStars(3500, 1000), createStars(5500, 500)];
   }, []);
 
   return (
