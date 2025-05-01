@@ -1,3 +1,5 @@
+import galaxyFragmentShader from '../shaders/galaxy/fragment.glsl';
+import galaxyVertexShader from '../shaders/galaxy/vertex.glsl';
 import { useFrame } from '@react-three/fiber';
 import { useMemo, useRef } from 'react';
 import { BufferAttribute, Color, Group, Vector3 } from 'three';
@@ -77,7 +79,12 @@ const Galaxy: React.FC<GalaxyProps> = ({
           <bufferAttribute attach="attributes-position" args={[points.position.array, 3]} />
           <bufferAttribute attach="attributes-color" args={[points.color.array, 3]} />
         </bufferGeometry>
-        <pointsMaterial depthWrite vertexColors sizeAttenuation size={size} color={insideColor} />
+        <shaderMaterial
+          depthWrite
+          vertexColors
+          vertexShader={galaxyVertexShader}
+          fragmentShader={galaxyFragmentShader}
+        />
       </points>
     </mesh>
   );
