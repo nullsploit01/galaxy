@@ -52,6 +52,10 @@ const Galaxy: React.FC<GalaxyProps> = ({
         meshRef.current.position.set(0, -0.9, 0);
         camera.position.set(0, 4, 0);
       }
+
+      if (isCollapsing) {
+        camera.position.set(2, 5, -12);
+      }
     }
 
     if (materialRef.current) {
