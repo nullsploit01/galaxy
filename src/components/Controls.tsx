@@ -44,6 +44,17 @@ const Controls = ({ onSelect }: { onSelect: (mode: string) => void }) => {
               </button>
             );
           })}
+
+          <hr style={{ margin: '8px 0', borderColor: '#444' }} />
+
+          <button
+            className="controls-item special"
+            onClick={() => {
+              window.location.href = '/v1';
+            }}
+          >
+            Open World Camera (V1)
+          </button>
         </div>
       )}
     </div>
