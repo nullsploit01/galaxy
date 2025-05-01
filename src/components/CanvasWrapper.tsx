@@ -12,8 +12,9 @@ const CanvasWrapper = () => {
       <Canvas>
         <Stars />
         <Galaxy />
-        <OrbitControls makeDefault />
         <Stats />
+        {/* <CameraController /> */}
+        <OrbitControls />
       </Canvas>
     </div>
   );

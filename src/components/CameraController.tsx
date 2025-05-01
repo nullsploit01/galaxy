@@ -2,7 +2,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import { Euler, Vector3 } from 'three';
 
-const moveSpeed = 0.3;
+let moveSpeed = 3;
 const rotationSpeed = 0.002;
 
 const CameraController = () => {
@@ -74,6 +74,12 @@ const CameraController = () => {
     // Up / Down
     if (keys.current['q']) direction.y -= 1;
     if (keys.current['e']) direction.y += 1;
+
+    moveSpeed = 0.5;
+
+    if (keys.current['shift']) {
+      moveSpeed = 2.0;
+    }
 
     // scroll movement (forward/back only)
     if (scrollDelta.current !== 0) {
