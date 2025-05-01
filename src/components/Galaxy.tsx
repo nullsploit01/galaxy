@@ -2,7 +2,7 @@ import galaxyFragmentShader from '../shaders/galaxy/fragment.glsl';
 import galaxyVertexShader from '../shaders/galaxy/vertex.glsl';
 import { useFrame } from '@react-three/fiber';
 import { useMemo, useRef } from 'react';
-import { BufferAttribute, Color, ShaderMaterial, Vector3 } from 'three';
+import { AdditiveBlending, BufferAttribute, Color, ShaderMaterial, Vector3 } from 'three';
 
 interface GalaxyProps {
   count?: number;
@@ -26,7 +26,7 @@ const Galaxy: React.FC<GalaxyProps> = ({
   spin = 1,
   randomness = 0.5,
   randomnessPower = 3,
-  insideColor = '#ff6030',
+  insideColor = '#ff0030',
   outsideColor = '#1b3984',
   position = new Vector3(0, 0, 0),
 }) => {
@@ -109,8 +109,9 @@ const Galaxy: React.FC<GalaxyProps> = ({
           ref={materialRef}
           needsUpdate
           depthWrite={false}
-          vertexColors
+          vertexColors={true}
           vertexShader={galaxyVertexShader}
+          blending={AdditiveBlending}
           fragmentShader={galaxyFragmentShader}
           uniforms={{
             uTime: { value: 0 },

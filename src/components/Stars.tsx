@@ -2,7 +2,7 @@ import starsFragmentShader from '../shaders/stars/fragment.glsl';
 import starsVertexShader from '../shaders/stars/vertex.glsl';
 import { useFrame } from '@react-three/fiber';
 import { Fragment, useMemo, useRef } from 'react';
-import { BufferAttribute, ShaderMaterial } from 'three';
+import { AdditiveBlending, BufferAttribute, ShaderMaterial } from 'three';
 
 const Stars = () => {
   const materialsRef = useRef<ShaderMaterial[]>([]);
@@ -92,6 +92,7 @@ const StarLayer = ({
       fragmentShader={starsFragmentShader}
       transparent
       depthWrite={false}
+      blending={AdditiveBlending}
     />
   </points>
 );
