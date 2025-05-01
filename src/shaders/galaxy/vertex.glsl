@@ -16,12 +16,12 @@ void main()
 
     angle += angleOffset;
 
-    modelPosition.x = cos(angle) * distanceToCenter;
-    modelPosition.z = sin(angle) * distanceToCenter;
+    modelPosition.x = cos(angle * 500.0) ;
+    modelPosition.z = sin(angle * 500.0) ;
 
-    modelPosition.x += aRandomness.x;
-    modelPosition.y += aRandomness.y;
-    modelPosition.z += aRandomness.z;
+    // modelPosition.x += aRandomness.x;
+    // modelPosition.y += aRandomness.y;
+    // modelPosition.z += aRandomness.z;
 
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 projectedPosition = projectionMatrix * viewPosition;
